@@ -13,6 +13,7 @@ from clickhouse_connect.driver.httpclient import HttpClient
 def create_client(*,
                   host: str = None,
                   username: str = None,
+                  uri: str = None,
                   password: str = '',
                   database: str = '__default__',
                   interface: Optional[str] = None,
@@ -28,6 +29,7 @@ def create_client(*,
     :param host: The hostname or IP address of the ClickHouse server. If not set, localhost will be used.
     :param username: The ClickHouse username. If not set, the default ClickHouse user will be used.
     :param password: The password for username.
+    :param uri: A string in standard URI format. Other connection values (such as host or user)
     :param database:  The default database for the connection. If not set, ClickHouse Connect will use the
      default database for username.
     :param interface: Must be http or https.  Defaults to http, or to https if port is set to 8443 or 443
@@ -108,7 +110,7 @@ def create_client(*,
                     if name.startswith('ch_'):
                         name = name[3:]
                     settings[name] = value
-        return HttpClient(interface, host, port, username, password, database, settings=settings, **kwargs)
+        return HttpClient(interface, uri, host, port, username, password, database, settings=settings, **kwargs)
     raise ProgrammingError(f'Unrecognized client type {interface}')
 
 

@@ -46,6 +46,7 @@ class HttpClient(Client):
     # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements,unused-argument
     def __init__(self,
                  interface: str,
+                 uri: str,
                  host: str,
                  port: int,
                  username: str,
@@ -72,7 +73,8 @@ class HttpClient(Client):
         Create an HTTP ClickHouse Connect client
         See clickhouse_connect.get_client for parameters
         """
-        self.url = f'{interface}://{host}:{port}'
+        self.url = uri if uri else f'{interface}://{host}:{port}'
+
         self.headers = {}
         ch_settings = settings or {}
         self.http = pool_mgr
