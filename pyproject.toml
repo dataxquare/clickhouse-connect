@@ -1,9 +1,20 @@
+[tool.poetry]
+name = "clickhouse-connect"
+version = "1.0.0"
+description = ""
+authors = [""]
+readme = "README.md"
+packages = [{include = "clickhouse_connect"}]
+
+[tool.poetry.dependencies]
+python = ">3.9,<3.13"
+
+[tool.poetry.scripts]
+start = "main:run"
+
+[tool.poetry.group.dev.dependencies]
+pytest="^5.2"
+
 [build-system]
-requires = ["setuptools", "cython==3.0.5"]
-
-build-backend = "setuptools.build_meta"
-
-[tool.pytest.ini_options]
-log_cli = true
-log_cli_level = "INFO"
-env_files = ["test.env"]
+requires = ["poetry-core", "setuptools", "cython==3.0.5"]
+build-backend = "poetry.core.masonry.api"
