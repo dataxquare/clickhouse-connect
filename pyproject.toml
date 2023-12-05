@@ -28,6 +28,9 @@ start = "main:run"
 [tool.poetry.group.dev.dependencies]
 pytest="^5.2"
 
+[tool.poetry.build]
+script = "build.py"
+
 [build-system]
-requires = ["poetry-core", "setuptools", "cython==3.0.5"]
+requires = ["poetry-core", "setuptools", "cython"]
 build-backend = "poetry.core.masonry.api"
