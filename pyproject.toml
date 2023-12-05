@@ -2,7 +2,7 @@
 name = "clickhouse-connect"
 version = "1.0.0"
 description = ""
-authors = [""]
+authors = ["Manuel Martín Morante <manu2001802@gmail.com>"]
 readme = "README.md"
 packages = [{include = "clickhouse_connect"}]
 
