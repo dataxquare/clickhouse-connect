@@ -13,6 +13,7 @@ from clickhouse_connect import create_client
 from clickhouse_connect import common
 from clickhouse_connect.driver.exceptions import OperationalError
 from clickhouse_connect.tools.testing import TableContext
+from clickhouse_connect.driver.httpclient import HttpClient
 
 
 class TestConfig(NamedTuple):
@@ -62,7 +63,7 @@ def test_db_fixture(test_config: TestConfig) -> Iterator[str]:
 def test_table_engine_fixture() -> Iterator[str]:
     yield 'MergeTree'
 
-
+# pylint: disable=too-many-branches
 @fixture(scope='session', autouse=True, name='test_client')
 def test_client_fixture(test_config: TestConfig, test_db: str) -> Iterator[Client]:
     compose_file = f'{Path(__file__).parent}/docker-compose.yml'
@@ -80,6 +81,9 @@ def test_client_fixture(test_config: TestConfig, test_db: str) -> Iterator[Clien
     while True:
         tries += 1
         try:
+            if test_config.docker:
+                HttpClient.params = {'SQL_test_setting': 'value'}
+                HttpClient.valid_transport_settings.add('SQL_test')
             client = create_client(
                 host=test_config.host,
                 port=test_config.port,
